@@ -1,0 +1,51 @@
+$primaryColor = #1089ff
+$hoverColor = #40a9ff
+
+pos(type, args)
+  position unquote(type)
+  if args[0] == center
+    top 50%
+    left 50%
+    transform translate3d(-50%, -50%, 0)
+  else
+    i = 0
+    for num in 0...length(args)
+      if i < length(args)
+        {args[i]} args[i + 1] is a 'unit' ? unit(args[i + 1]) ? args[i + 1] : unit(args[i + 1], px) : 0
+        if args[i + 1] is a 'unit'
+          i += 2
+        else
+          i += 1
+absolute()
+  pos('absolute', arguments)
+fixed()
+  pos('fixed', arguments)
+  
+ellipse()
+  overflow hidden
+  text-overflow ellipsis
+  white-space nowrap
+
+flex-center()
+  display flex
+  align-items center
+  justify-content center
+
+flex-start()
+  display flex
+  align-items center
+  justify-content flex-start
+  
+flex-end()
+  display flex
+  align-items center
+  justify-content flex-end
+
+flex-space()
+  display flex
+  align-items center
+  justify-content space-between
+
+variant()
+  font-variant tabular-nums
+  font-feature-settings tnum
