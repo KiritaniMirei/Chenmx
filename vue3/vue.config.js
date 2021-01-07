@@ -20,6 +20,7 @@ module.exports = {
             rootValue: 40,
             propList: ['*'],
             minPixelValue: 2,
+            exclude: /node_modules/,
           }),
         ],
       },
