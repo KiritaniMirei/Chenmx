@@ -20,7 +20,7 @@ export default defineComponent({
   name: 'Home',
   components: {},
   setup() {
-    const refRoutes = ref<RouteRecordRaw[]>(routes.slice(1, 2));
+    const refRoutes = ref<RouteRecordRaw[]>(routes.slice(1, routes.length));
     const router = useRouter();
     const handleCallClick = (path: string) => {
       router.push({

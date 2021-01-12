@@ -1,12 +1,12 @@
 <template>
   <div class='directives'>
-    <van-cell title="复制指令："
+    <van-cell title="复制："
       class="name"></van-cell>
     <div v-copy="copyText"
       class="van-collapse-item__content">
       {{copyText}}
     </div>
-    <van-cell title="长按指令："
+    <van-cell title="长按："
       class="name"></van-cell>
     <div v-longpress="handleLongpress"
       class="van-collapse-item__content">
@@ -17,8 +17,13 @@
     <div class="van-collapse-item__content">
       <input type="text"
         v-model="spaceTest"
-        v-filterspace
-        @input="test">
+        v-filterspace />
+    </div>
+    <van-cell title="水印："
+      class="name"></van-cell>
+    <div class="van-collapse-item__content">
+      <div style="height: 200px;border: 1px solid #d5d5d5"
+        v-watermark="{text: '沈诚露', fillStyle: 'pink'}"></div>
     </div>
   </div>
 </template>
@@ -27,20 +32,16 @@
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
-    const copyText = ref('沈诚露沈诚露沈诚露沈诚露沈诚露');
+    const copyText = ref('如果你突然打了个喷嚏');
     const handleLongpress = (e: Event) => {
       e.preventDefault();
       alert('长按了');
     };
     const spaceTest = ref('');
-    const test = () => {
-      console.log(spaceTest.value);
-    };
     return {
       copyText,
       handleLongpress,
       spaceTest,
-      test,
     };
   },
 });

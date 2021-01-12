@@ -75,14 +75,50 @@ const longpress = {
 };
 
 const filterspace = {
-  beforeMount(el: any) {
+  beforeMount(el: any, binding: any) {
+    let lock = false;
     el.handle = () => {
+      if (lock) {
+        return;
+      }
       el.value = el.value.replace(/\s/g, '');
+      const event = new Event('input');
+      el.dispatchEvent(event);
     };
-    el.addEventListener('keydown', el.handle);
+    el.addEventListener('compositionstart', () => {
+      lock = true;
+    });
+    el.addEventListener('compositionend', () => {
+      lock = false;
+    });
+    el.addEventListener('keyup', el.handle);
   },
   unmounted(el: any) {
-    el.removeEventListener('keydown', el.handle);
+    el.removeEventListener('keyup', el.handle);
+  },
+};
+
+function createWaterMark(text: string, font: string, fillStyle: string, width: number, height: number) {
+  const canvas = document.createElement('canvas');
+  canvas.width = width || 100;
+  canvas.height = height || 80;
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    ctx.rotate((-20 * Math.PI) / 180);
+    ctx.font = font || '16px Microsoft JhengHei';
+    ctx.fillStyle = fillStyle || 'rgba(180, 180, 180, 0.3)';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, canvas.width / 10, canvas.height / 2);
+    return canvas.toDataURL('image/png');
+  }
+}
+
+const watermark = {
+  beforeMount(el: any, binding: any) {
+    const value = binding.value;
+    const url = createWaterMark(value.text, value.font, value.fillStyle, value.width, value.height);
+    el.style.background = `url(${url})`;
   },
 };
 
@@ -90,6 +126,7 @@ const directives = {
   copy,
   longpress,
   filterspace,
+  watermark,
 };
 
 export interface Directives {
