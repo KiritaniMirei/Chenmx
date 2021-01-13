@@ -25,6 +25,15 @@ const routes: Array<RouteRecordRaw> = [
       description: '可以拖动，发牌员飞卡片',
     },
   },
+  {
+    path: '/storage',
+    name: '多页签通信',
+    component: () => import('../views/多页签通信.vue'),
+    meta: {
+      title: '浏览器跨页签通信',
+      description: '可以监听到storage的增加 删除 修改，本标签页不生效',
+    },
+  },
 ];
 
 export default routes;
