@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 import routes from '../router/routes';
 import { RouteRecordRaw, useRouter } from 'vue-router';
 import Message from '@/plugins/message/message.vue';
@@ -31,6 +31,19 @@ export default defineComponent({
         path,
       });
     };
+    onMounted(async () => {
+      // const allWWopenData = document.querySelectorAll('ww-open-data');
+      // const sleep = (ms) =>
+      //   new Promise((resolve) => {
+      //     setTimeout(resolve, ms);
+      //   });
+      // if (allWWopenData.length > 1000) {
+      //   for (let i = 0; i < Math.ceil(allWWopenData.length / 1000); i++) {
+      //     await sleep(500);
+      //     console.log(Array.from(allWWopenData).slice(i * 1000, i * 1000 + 1000));
+      //   }
+      // }
+    });
     return {
       refRoutes,
       handleCallClick,
