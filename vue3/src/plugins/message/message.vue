@@ -29,6 +29,8 @@
 
 <script lang='ts'>
 import { computed, defineComponent, onBeforeUnmount, onMounted, ref } from 'vue';
+import { emitter } from './createMessage';
+
 export default defineComponent({
   props: {
     duration: {
@@ -85,6 +87,7 @@ export default defineComponent({
     function handleAnimationEnd() {
       isVisible.value = false;
       context.emit('timeup');
+      emitter.emit('timeup');
     }
     onMounted(() => {
       limitBar.value.addEventListener('animationend', handleAnimationEnd);

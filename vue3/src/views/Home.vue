@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <Message></Message>
     <van-cell-group>
       <van-cell v-for="route of refRoutes"
         :key="route.path"
@@ -16,13 +15,11 @@
 import { defineComponent, onMounted, ref } from 'vue';
 import routes from '../router/routes';
 import { RouteRecordRaw, useRouter } from 'vue-router';
-import Message from '@/plugins/message/message.vue';
+import createMessage from '@/plugins/message/createMessage';
 
 export default defineComponent({
   name: 'Home',
-  components: {
-    Message,
-  },
+  components: {},
   setup() {
     const refRoutes = ref<RouteRecordRaw[]>(routes.slice(1, routes.length));
     const router = useRouter();
@@ -43,6 +40,9 @@ export default defineComponent({
       //     console.log(Array.from(allWWopenData).slice(i * 1000, i * 1000 + 1000));
       //   }
       // }
+      createMessage({
+        duration: 3,
+      });
     });
     return {
       refRoutes,
