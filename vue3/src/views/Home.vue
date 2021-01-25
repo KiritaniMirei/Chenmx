@@ -16,11 +16,23 @@ import { defineComponent, onMounted, ref } from 'vue';
 import routes from '../router/routes';
 import { RouteRecordRaw, useRouter } from 'vue-router';
 import createMessage from '@/plugins/message/createMessage';
+import { arrToObj } from '@/utils/util';
 
 export default defineComponent({
   name: 'Home',
   components: {},
   setup() {
+    const testarr = [
+      {
+        name: '陈明旭',
+        age: 28,
+      },
+      {
+        name: '沈诚露',
+        age: 28,
+      },
+    ];
+    console.log(arrToObj(testarr, 'name'));
     const refRoutes = ref<RouteRecordRaw[]>(routes.slice(1, routes.length));
     const router = useRouter();
     const handleCallClick = (path: string) => {
@@ -29,17 +41,6 @@ export default defineComponent({
       });
     };
     onMounted(async () => {
-      // const allWWopenData = document.querySelectorAll('ww-open-data');
-      // const sleep = (ms) =>
-      //   new Promise((resolve) => {
-      //     setTimeout(resolve, ms);
-      //   });
-      // if (allWWopenData.length > 1000) {
-      //   for (let i = 0; i < Math.ceil(allWWopenData.length / 1000); i++) {
-      //     await sleep(500);
-      //     console.log(Array.from(allWWopenData).slice(i * 1000, i * 1000 + 1000));
-      //   }
-      // }
       createMessage({
         duration: 3,
       });
