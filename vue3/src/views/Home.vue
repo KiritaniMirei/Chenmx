@@ -15,7 +15,6 @@
 import { defineComponent, onMounted, ref } from 'vue';
 import routes from '../router/routes';
 import { RouteRecordRaw, useRouter } from 'vue-router';
-import createMessage from '@/plugins/message/createMessage';
 import { arrToObj } from '@/utils/util';
 
 export default defineComponent({
@@ -40,11 +39,7 @@ export default defineComponent({
         path,
       });
     };
-    onMounted(async () => {
-      createMessage({
-        duration: 3,
-      });
-    });
+    onMounted(async () => {});
     return {
       refRoutes,
       handleCallClick,

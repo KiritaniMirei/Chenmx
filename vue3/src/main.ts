@@ -3,7 +3,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import directives, { Directives } from './utils/directives';
-import { Cell, CellGroup } from 'vant';
+import { Cell, CellGroup, Button } from 'vant';
 import 'vant/lib/index.css';
 
 const app = createApp(App);
@@ -18,4 +18,5 @@ app
   .use(router)
   .use(Cell)
   .use(CellGroup)
+  .use(Button)
   .mount('#root');

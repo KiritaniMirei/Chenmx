@@ -34,6 +34,15 @@ const routes: Array<RouteRecordRaw> = [
       description: '可以监听到storage的增加 删除 修改，本标签页不生效',
     },
   },
+  {
+    path: '/sign',
+    name: '签名',
+    component: () => import('../views/签名.vue'),
+    meta: {
+      title: 'canvas签名',
+      description: '仿支付宝写福 签名 会退 视频',
+    },
+  },
 ];
 
 export default routes;
