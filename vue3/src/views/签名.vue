@@ -17,12 +17,13 @@
         <van-button plain
           type="primary"
           round
+          :class="{disabled: nextDisabled}"
           @click="next">下一步
         </van-button>
         <van-button plain
           type="success"
           round
-          @click="clearCanvas"> 保存
+          @click="createImg"> 保存
         </van-button>
       </div>
     </div>
@@ -31,13 +32,14 @@
 
 <script lang='ts'>
 import { computed, defineComponent, onMounted, ref, watch } from 'vue';
+import { base64ToBlob, downloadFile } from '@/utils/util';
 
 export default defineComponent({
   setup() {
     let canvas: HTMLCanvasElement | null, ctx: CanvasRenderingContext2D | null;
     const imageDataArr = ref<any>([]);
     const currentIndex = ref(0);
-    const ratio = 3;
+    const ratio = 10;
     const maxMemo = 3;
     const imgData = computed(() => {
       if (currentIndex.value >= 0 && currentIndex.value < imageDataArr.value.length) {
@@ -45,7 +47,10 @@ export default defineComponent({
       }
     });
     const preDisabled = computed(() => {
-      return (imageDataArr.value.length < 4 && currentIndex.value < 0) || (imageDataArr.value.length >= 4 && currentIndex.value === 0);
+      return (imageDataArr.value.length < maxMemo + 1 && currentIndex.value < 0) || (imageDataArr.value.length >= maxMemo + 1 && currentIndex.value === 0);
+    });
+    const nextDisabled = computed(() => {
+      return imageDataArr.value.length === currentIndex.value + 1 || !imageDataArr.value.length;
     });
     const clearCanvas = () => {
       imageDataArr.value = [];
@@ -60,6 +65,13 @@ export default defineComponent({
         }
       }
     };
+    const next = () => {
+      if (canvas && ctx) {
+        if (!nextDisabled.value) {
+          currentIndex.value++;
+        }
+      }
+    };
     watch(currentIndex, () => {
       if (canvas && ctx) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -68,7 +80,12 @@ export default defineComponent({
         }
       }
     });
-    const next = () => {};
+    const createImg = () => {
+      if (canvas && ctx) {
+        const blob = base64ToBlob(canvas.toDataURL('image/png'));
+        downloadFile('签名.png', blob);
+      }
+    };
     onMounted(() => {
       canvas = document.querySelector('canvas');
       const clientWidth = Math.min(document.documentElement.clientWidth, 480);
@@ -102,7 +119,11 @@ export default defineComponent({
         canvas.addEventListener('touchend', () => {
           if (canvas && ctx) {
             const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            imageDataArr.value.push(data);
+            if (!nextDisabled.value) {
+              imageDataArr.value.splice(currentIndex.value + 1, imageDataArr.value.length - currentIndex.value, data);
+            } else {
+              imageDataArr.value.push(data);
+            }
             imageDataArr.value = imageDataArr.value.slice(maxMemo * -1 - 1);
             currentIndex.value = imageDataArr.value.length - 1;
             ctx.closePath();
@@ -119,6 +140,8 @@ export default defineComponent({
       imgData,
       currentIndex,
       preDisabled,
+      nextDisabled,
+      createImg,
     };
   },
 });

@@ -31,7 +31,6 @@ export default defineComponent({
         age: 28,
       },
     ];
-    console.log(arrToObj(testarr, 'name'));
     const refRoutes = ref<RouteRecordRaw[]>(routes.slice(1, routes.length));
     const router = useRouter();
     const handleCallClick = (path: string) => {

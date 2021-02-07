@@ -49,7 +49,6 @@ export default defineComponent({
     const imgBaseIndex = ref(0);
     const actionText = ref('');
     const handleDragMove = (position: any) => {
-      console.log(position);
       if (position.left < -10) {
         actionText.value = '不喜欢';
       } else if (position.left > 10) {

@@ -40,7 +40,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/签名.vue'),
     meta: {
       title: 'canvas签名',
-      description: '仿支付宝写福 签名 会退 视频',
+      description: '写字版 包含上一步 下一步 保存',
     },
   },
 ];
